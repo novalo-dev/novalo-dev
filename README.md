@@ -17,3 +17,9 @@ More on [novalo.fr](https://novalo.fr).
 
 If my open-source work saves you time, you can support it on
 [GitHub Sponsors](https://github.com/sponsors/novalo-dev) 💜
+
+#### Sponsors
+
+<!-- sponsors:start -->
+_No sponsors yet - [be the first](https://github.com/sponsors/novalo-dev)!_
+<!-- sponsors:end -->

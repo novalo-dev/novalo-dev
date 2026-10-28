@@ -1,0 +1,36 @@
+name: Sponsors
+
+# Keeps the sponsor lists of the profile README in step with GitHub Sponsors:
+# current sponsors, then the five most recent past ones. Once a day, and on
+# demand from the Actions tab.
+on:
+  schedule:
+    - cron: '23 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Rewrite the sponsor lists
+        env:
+          SPONSORS_TOKEN: ${{ secrets.SPONSORS_TOKEN }}
+        run: python3 .github/scripts/sponsors.py
+
+      # A commit only when the lists changed, so the history is not one empty
+      # commit a day.
+      - name: Commit
+        run: |
+          if git diff --quiet README.md; then
+            echo "No change." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -am 'Update the sponsor lists'
+          git push
