@@ -7,6 +7,7 @@ an account receives. Sponsors who chose to stay private are never listed.
 import json
 import os
 import re
+import urllib.error
 import urllib.request
 
 PAST_LIMIT = 5
@@ -31,7 +32,9 @@ query($after: String) {
 
 
 def fetch():
-    token = os.environ["SPONSORS_TOKEN"]
+    token = os.environ.get("SPONSORS_TOKEN", "")
+    if not token:
+        raise SystemExit("SPONSORS_TOKEN is not set in this repository's Actions secrets")
     nodes, after = [], None
     while True:
         body = json.dumps({"query": QUERY, "variables": {"after": after}}).encode()
@@ -40,8 +43,11 @@ def fetch():
             data=body,
             headers={"Authorization": "Bearer " + token, "Content-Type": "application/json"},
         )
-        with urllib.request.urlopen(request) as response:
-            data = json.load(response)
+        try:
+            with urllib.request.urlopen(request) as response:
+                data = json.load(response)
+        except urllib.error.HTTPError as error:
+            raise SystemExit("GitHub answered HTTP %d: %s" % (error.code, error.read().decode()[:300]))
         if "errors" in data:
             raise SystemExit("GraphQL error: " + json.dumps(data["errors"]))
         page = data["data"]["viewer"]["sponsorshipsAsMaintainer"]
@@ -92,4 +98,11 @@ def main():
     open("README.md", "w", encoding="utf-8").write(updated)
 
 
-main()
+# The reason of a failure is written as an annotation, the one place of a run
+# that can be read without opening its log.
+try:
+    main()
+except SystemExit as stop:
+    if stop.code not in (None, 0):
+        print("::error::" + str(stop.code))
+    raise
