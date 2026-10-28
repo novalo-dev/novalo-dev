@@ -1,16 +1,19 @@
-## Hi there 👋
+### Hi, I'm Ouanis - founder of [Novalo](https://novalo.fr) 👋
 
-<!--
-**novalo-dev/novalo-dev** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+I build PrestaShop modules from Marseille, France: open-source tools anyone can
+use, and premium integrations for merchants who sell on marketplaces.
 
-Here are some ideas to get you started:
+#### Open source
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+- **[O'So MCP Server](https://github.com/novalo-dev/Prestashop-MCP-Server)** - turns a PrestaShop shop into an MCP server, so AI assistants such as Claude, ChatGPT, Make or n8n can read and manage the catalogue and orders, with OAuth and per-employee permissions.
+
+#### Premium
+
+- **O'So Flux For Octopia** - connects a PrestaShop shop to the Octopia marketplace: products, offers and orders.
+
+More on [novalo.fr](https://novalo.fr).
+
+#### Support
+
+If my open-source work saves you time, you can support it on
+[GitHub Sponsors](https://github.com/sponsors/novalo-dev) 💜
